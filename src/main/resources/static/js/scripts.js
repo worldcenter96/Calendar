@@ -48,11 +48,11 @@ $(document).ready(function () {
     getSchedule();
 })
 
-// 메모를 불러와서 보여줍니다.
+// 전체 스케줄을 불러와서 보여줍니다.
 function getSchedule() {
-    // 1. 기존 메모 내용을 지웁니다.
+    // 1. 기존 스케줄 내용을 지웁니다.
     $('#cards-box').empty();
-    // 2. 메모 목록을 불러와서 HTML로 붙입니다.
+    // 2. 스케줄 목록을 불러와서 HTML로 붙입니다.
     $.ajax({
         type: 'GET',
         url: '/api/schedule',
@@ -73,12 +73,12 @@ function getSchedule() {
 
 // 날짜를 기준으로 조회합니다.
 function getDateSchedule() {
-    // 1. 기존 메모 내용을 지웁니다.
+    // 1. 기존 스케줄 내용을 지웁니다.
     $('#cards-box').empty();
 
     // 2. 선택한 날짜 정보를 가져옵니다.
     let date = userDate;
-    // 3. 메모 목록을 불러와서 HTML로 붙입니다.
+    // 3. 스케줄 목록을 불러와서 HTML로 붙입니다.
 
     $.ajax({
         type: 'GET',
@@ -95,6 +95,7 @@ function getDateSchedule() {
                 addHTML(id, user, content, date, updateDate, createDate);
             }
         }, error: function (xhr, status, error) {
+            alert('해당 날짜에 일정이 없습니다.');
             console.error('AJAX 요청 실패:', status, error);
         }
     })
@@ -102,13 +103,13 @@ function getDateSchedule() {
 
 // ID를 기준으로 조회합니다.
 function getIdSchedule() {
-    // 1. 기존 메모 내용을 지웁니다.
+    // 1. 기존 스케줄 내용을 지웁니다.
     $('#cards-box').empty();
 
     // 2. 선택한 날짜 정보를 가져옵니다.
     let id = $('#id-check').val();
 
-    // 3. 메모 목록을 불러와서 HTML로 붙입니다.
+    // 3. 스케줄 목록을 불러와서 HTML로 붙입니다.
     $.ajax({
         type: 'GET',
         url: `/api/schedule/id/${id}`,
@@ -121,6 +122,7 @@ function getIdSchedule() {
             let createDate = response.createDate;
             addHTML(id, user, content, date, updateDate, createDate);
         }, error: function (xhr, status, error) {
+            alert('id에 해당하는 일정이 없습니다.');
             console.error('AJAX 요청 실패:', status, error);
         }
     })
